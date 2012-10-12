@@ -6,6 +6,8 @@
 
 #include <boost/intrusive_ptr.hpp>
 
+/* Note: this is not thread-safe. */
+
 template <typename A, typename... Args>
 boost::intrusive_ptr<A> make_intrusive(Args&& ...args) {
   return boost::intrusive_ptr<A>(new A(std::forward<Args>(args)...));
