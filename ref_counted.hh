@@ -8,9 +8,12 @@
 
 /* Note: this is not thread-safe. */
 
+template <typename A>
+using IntrPtr = boost::intrusive_ptr<A>;
+
 template <typename A, typename... Args>
-boost::intrusive_ptr<A> make_intrusive(Args&& ...args) {
-  return boost::intrusive_ptr<A>(new A(std::forward<Args>(args)...));
+IntrPtr<A> make_intrusive(Args&& ...args) {
+  return IntrPtr<A>(new A(std::forward<Args>(args)...));
 }
 
 template <typename A>
