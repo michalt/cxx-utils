@@ -39,9 +39,9 @@ class RefCounted {
 
     RefCounted() : ref_count_(0) { }
 
-    RefCounted(const RefCounted &rc) : ref_count_(0) { }
+    RefCounted(const RefCounted &rc) : ref_count_(0) { (void) rc; }
 
-    RefCounted(RefCounted &&rc) : ref_count_(0) { }
+    RefCounted(RefCounted &&rc) : ref_count_(0) { (void) rc; }
 
     ~RefCounted() = default;
 
@@ -49,9 +49,9 @@ class RefCounted {
      * of pointers that point to the object.  This is only important for derived
      * classes that have automatically generated operator=. */
 
-    RefCounted &operator=(const RefCounted &rc) { return *this; }
+    RefCounted &operator=(const RefCounted &rc) { (void) rc; return *this; }
 
-    RefCounted &operator=(RefCounted &&rc) { return *this; }
+    RefCounted &operator=(RefCounted &&rc) { (void) rc; return *this; }
 
   private:
     mutable std::size_t ref_count_;

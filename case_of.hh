@@ -16,6 +16,7 @@ struct Visitor_<ReturnType> {
 
   template <typename T>
   ReturnType operator()(T t) const {
+    (void) t;
     static_assert(std::is_same<T, T>::value == false,
         "You need to specify a lambda for _all_ possible types!\
         You're missing case for T.");
@@ -60,6 +61,8 @@ struct Visitor2_<ReturnType> {
 
   template <typename T, typename U>
   ReturnType operator()(T t, T u) const {
+    (void) t;
+    (void) u;
     static_assert(std::is_same<T, T>::value == false,
         "You need to specify a lambda for _all_ possible types!\
         You're missing case for T and U.");
