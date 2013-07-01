@@ -1,5 +1,7 @@
 #include "ref_counted.hh"
 
+using namespace util;
+
 struct Foo : public RefCounted<Foo> {
   Foo(int i) : x(i) { }
 

@@ -8,6 +8,8 @@
 
 /* Note: this is not thread-safe. */
 
+namespace util {
+
 template <typename A>
 using IntrPtr = boost::intrusive_ptr<A>;
 
@@ -57,17 +59,19 @@ class RefCounted {
     mutable std::size_t ref_count_;
 };
 
+}  /* namespace util */
+
+
 namespace std {
 
-  template<typename A>
-  struct hash< IntrPtr<A> > {
-    inline std::size_t operator()(const IntrPtr<A> &ptr) const {
-      std::hash<A*> h;
-      return h(ptr.get());
-    }
-  };
+template<typename A>
+struct hash< util::IntrPtr<A> > {
+  inline std::size_t operator()(const util::IntrPtr<A> &ptr) const {
+    std::hash<A*> h;
+    return h(ptr.get());
+  }
+};
 
 }
-
 
 #endif /* REF_COUNTED_HH */

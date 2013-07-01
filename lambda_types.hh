@@ -2,8 +2,12 @@
 #define LAMBDA_TYPES_HH
 
 namespace {
-  struct EmptyType;
+
+struct EmptyType;
+
 }
+
+namespace util {
 
 template <typename T>
 struct LambdaTypes_;
@@ -45,5 +49,7 @@ struct LambdaTypes {
   typedef typename LambdaTypes_<decltype(&L::operator())>::ReturnType
     ReturnType;
 };
+
+}  /* namespace util */
 
 #endif /* LAMBDA_TYPES_HH */

@@ -7,6 +7,11 @@
 
 #include "lambda_types.hh"
 
+
+using namespace util;
+
+namespace {
+
 template <typename... Rest>
 struct Visitor_;
 
@@ -41,15 +46,6 @@ struct Visitor_<ReturnType, Head, Tail...> : public Visitor_<ReturnType, Tail...
   }
 
   Head fun;
-};
-
-template <typename Head, typename... Tail>
-struct Visitor
-    : public boost::static_visitor<typename LambdaTypes<Head>::ReturnType>
-    , public Visitor_<typename LambdaTypes<Head>::ReturnType, Head, Tail...> {
-  Visitor(Head &&fun, Tail&&... tail)
-    : Visitor_<typename LambdaTypes<Head>::ReturnType, Head, Tail...>(
-        std::forward<Head>(fun), std::forward<Tail>(tail)...) { }
 };
 
 template <typename... Rest>
@@ -90,6 +86,21 @@ struct Visitor2_<ReturnType, Head, Tail...> : public Visitor2_<ReturnType, Tail.
   Head fun;
 };
 
+}  /* anonymous namespace */
+
+
+namespace util {
+
+template <typename Head, typename... Tail>
+struct Visitor
+    : public boost::static_visitor<typename LambdaTypes<Head>::ReturnType>
+    , public Visitor_<typename LambdaTypes<Head>::ReturnType, Head, Tail...> {
+  Visitor(Head &&fun, Tail&&... tail)
+    : Visitor_<typename LambdaTypes<Head>::ReturnType, Head, Tail...>(
+        std::forward<Head>(fun), std::forward<Tail>(tail)...) { }
+};
+
+
 template <typename Head, typename... Tail>
 struct Visitor2
     : public boost::static_visitor<typename LambdaTypes<Head>::ReturnType>
@@ -124,5 +135,7 @@ typename LambdaTypes<Head>::ReturnType CaseOf2(const V &variant1, const V &varia
     std::forward<Tail>(tail)...};
   return boost::apply_visitor(visitor, variant1, variant2);
 }
+
+}  /* namespace util */
 
 #endif /* CASE_OF_HH */

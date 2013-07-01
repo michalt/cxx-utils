@@ -2,6 +2,8 @@
 
 #include "case_of.hh"
 
+using namespace util;
+
 int main(int argc, char *argv[]) {
 
   boost::variant<int, double, std::string> a{"foo"};

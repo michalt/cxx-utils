@@ -2,6 +2,8 @@
 
 #include <chrono>
 
+namespace util {
+
 class Timer {
   typedef std::chrono::high_resolution_clock clock;
 
@@ -32,3 +34,5 @@ class Timer {
     clock::time_point start_;
     clock::time_point stop_;
 };
+
+}  /* namespace util */
